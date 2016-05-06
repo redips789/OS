@@ -12,7 +12,7 @@ jmp start
 
 start:
 
-; initialisation des segments en 0x07C0
+; segmento 0x07C0 inicializacija
     mov ax, 0x07C0
     mov ds, ax
     mov es, ax
@@ -20,14 +20,14 @@ start:
     mov ss, ax
     mov sp, 0xf000
 
-; recuparation de l'unite de boot
+; boot paemimas
     mov [bootdrv], dl    
 
-; affiche un msg
-    mov si, msgDebut
-    call afficher
+; pranesimo parodymas
+    mov si, msgStart
+    call display
 
-; charger le noyau
+; pakrauti kerneli
     xor ax, ax
     int 0x13
 
@@ -46,33 +46,33 @@ start:
     pop es
 
 
-; initialisation de la GDT
-    ; descInit base(32), limite(20/32), acces/type(8), flags(4/8), adresse(16)
+;  GDT inicializavimas
+    ; descInit base(32), limit(20/32), acces/type(8), flags(4/8), adress(16)
     descInit 0, 0xFFFFF, 10011011b, 1101b, gdt_cs
     descInit 0, 0xFFFFF, 10010011b, 1101b, gdt_ds
 
-; initialisation du pointeur sur la GDT
-    mov ax, gdtend    ; calcule la limite de GDT
+; pointerio i GDT inicializavimas
+    mov ax, gdtend    ; GDT limito skaiciavimas
     mov bx, gdt
     sub ax, bx
     mov word [gdtptr], ax
 
-    xor eax, eax    ; calcule l'adresse lineaire de GDT
+    xor eax, eax    ; tiesinio adreso i GDT skaiciavimas
     mov  ax, ds
     mov  bx, gdt
     call calcadr
     mov dword [gdtptr+2], ecx
 
-; passage en modep
+; perejimas i protected mode
     cli
-    lgdt [gdtptr]    ; charge la gdt
+    lgdt [gdtptr]    ; gdt pakrovimas
     mov eax, cr0
     or   ax, 1
-    mov cr0, eax    ; PE mis a 1 (CR0)
+    mov cr0, eax    ; (CR0)
 
     jmp next
 next:
-    mov ax, 0x10    ; segment de donne
+    mov ax, 0x10    ; data segmentas
     mov ds, ax
     mov fs, ax
     mov gs, ax
@@ -87,7 +87,7 @@ end:
 
 
 ;--------------------------------------------------------------------
-msgDebut db "loading kernel", 13, 10, 0
+msgStart db "loading kernel", 13, 10, 0
 
 gdt:
 gdt_null:
@@ -99,13 +99,12 @@ gdt_ds:
 gdtend:
 
 gdtptr:
-    dw    0x0000    ; limite
+    dw    0x0000    ; limit
     dd    0         ; base
 
 bootdrv: db 0
 
 ;--------------------------------------------------------------------
-;; NOP jusqu'a 510
 times 510-($-$$) db 144
 dw 0xAA55
 

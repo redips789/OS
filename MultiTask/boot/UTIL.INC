@@ -1,20 +1,20 @@
 ;---------------------------------------------------------
-; Synopsis:	Affiche une chaine de caracteres se terminant par 0x0
-; Entree:	ds:si -> pointe sur la chaine a afficher
+; Bendrai:	Parodyti string pasibaigianti 0x0
+; Pradzia:	ds:si -> rodykle i chain display
 ;---------------------------------------------------------
-afficher:
+display:
 	push ax
 	push bx
-.debut:
+.start:
 	lodsb		; ds:si -> al
-	cmp al,0	; fin chaine ?
-	jz .fin
-	mov ah,0x0E	; appel au service 0x0e, int 0x10 du bios
-	mov bx,0x07	; bx -> attribut, al -> caractere ascii
+	cmp al,0	; end chain ?
+	jz .end
+	mov ah,0x0E	; kvieciam servisa 0x0e, int 0x10 bios interrupt
+	mov bx,0x07	; bx -> atributas, al -> ka spausdinam (ascii char)
 	int 0x10
-        jmp .debut
+        jmp .start
 
-.fin:
+.end:
 	pop bx
 	pop ax
 	ret
