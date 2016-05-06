@@ -51,15 +51,15 @@ struct pt_entry {
 } __attribute__ ((packed));
 
 
-/*  Make a page as used / free in the bitmap  */
+/*  Padarom puslapi used / free bitmap'e  */
 #define set_page_frame_used(page)	mem_bitmap[((u32) page)/8] |= (1 << (((u32) page)%8))
 #define release_page_frame(p_addr)	mem_bitmap[((u32) p_addr/PAGESIZE)/8] &= ~(1 << (((u32) p_addr/PAGESIZE)%8))
 
-/* Selects a free page in the bitmap */
+/* Pasirinkti laisva puslapi bitmap'e */
 char *get_page_frame(void);
 
-/* Initializes the memory management data structures */
+/* Inicijuoja memory management data strukturas */
 void init_mm(void);
 
-/* Created a page directory for a spot */
+/* Sukurti page directory uzduociai */
 u32* pd_create(u32*, unsigned int);

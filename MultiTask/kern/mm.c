@@ -5,9 +5,8 @@
 #include "mm.h"
 
 
-/*
- * The bitmap path in search of a free page and brand
- * as used before returning its physical address.
+/* 
+ * Bitmap iesko laisvo puslapio ir grazina jo fizini adresa
  */
 char* get_page_frame(void)
 {
@@ -31,30 +30,30 @@ void init_mm(void)
 	u32 page_addr;
 	int i, pg;
 
-	/* bitmap initialization of physical pages */
+	/* bitmap inicijuoja puslapius */
 	for (pg = 0; pg < RAM_MAXPAGE / 8; pg++)
 		mem_bitmap[pg] = 0;
 
-	/*  pages reserved for kernel */
+	/*  puslapiai rezervuoti kerneliui */
 	for (pg = PAGE(0x0); pg < PAGE(0x20000); pg++) 
 		set_page_frame_used(pg);
 
-	/*  pages reserved for hardware */
+	/*  puslapiai rezervuoti hardware */
 	for (pg = PAGE(0xA0000); pg < PAGE(0x100000); pg++) 
 		set_page_frame_used(pg);
 	
 
-	/* Takes a page to the Page Directory and Page Table for [0] */
+	/* pasiemam Page Directory[0] ir Page Table[0] */
 	pd0 = (u32*) get_page_frame();
 	pt0 = (u32*) get_page_frame();
 
-	/* Initialization Page Directory */
+	/* Inicializuoja Page Directory */
 	pd0[0] = (u32) pt0;
 	pd0[0] |= 3;
 	for (i = 1; i < 1024; i++)
 		pd0[i] = 0;
 
-	/* Initialize the table Page [0] */
+	/* Inicializuoja Page table[0] */
 	page_addr = 0;
 	for (pg = 0; pg < 1024; pg++) {
 		pt0[pg] = page_addr;
@@ -70,8 +69,8 @@ void init_mm(void)
 }
 
 /* 
- * code_phys_addr : location code in physical memory
- * code_size : code size
+ * code_phys_addr (in physical memory)
+ * code_size 
  */
 u32* pd_create(u32 * code_phys_addr, unsigned int code_size)
 {
@@ -79,7 +78,7 @@ u32* pd_create(u32 * code_phys_addr, unsigned int code_size)
 	u32 i, j;
 	u32 pages;
 
-	/* Beginning and initiates a page to the Page Directory */
+	/* inicializuojam page table[0] ir likusia page directory */
 	pd = (u32*) get_page_frame();
 	for (i = 1; i < 1024; i++)
 		pd[i] = 0;
@@ -88,7 +87,7 @@ u32* pd_create(u32 * code_phys_addr, unsigned int code_size)
 	pd[0] = pd0[0];
 	pd[0] |= 3;
 
-	/* u space */
+	/* user space */
 	if (code_size % PAGESIZE)
 		pages = code_size / PAGESIZE + 1;
 	else
