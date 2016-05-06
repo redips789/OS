@@ -6,8 +6,8 @@
 
 
 /*
- * Parcours le bitmap a la recherche d'une page libre et la marque
- * comme utilisee avant de retourner son adresse physique.
+ * The bitmap path in search of a free page and brand
+ * as used before returning its physical address.
  */
 char* get_page_frame(void)
 {
@@ -25,43 +25,43 @@ char* get_page_frame(void)
 	return (char *) -1;
 }
 
-/* Cree un mapping tel que vaddr = paddr sur 4Mo */
+/* Created a mapping as vaddr = PADDR on 4MB */
 void init_mm(void)
 {
 	u32 page_addr;
 	int i, pg;
 
-	/* Initialisation du bitmap de pages physiques */
+	/* bitmap initialization of physical pages */
 	for (pg = 0; pg < RAM_MAXPAGE / 8; pg++)
 		mem_bitmap[pg] = 0;
 
-	/* Pages reservees pour le noyau */
+	/*  pages reserved for kernel */
 	for (pg = PAGE(0x0); pg < PAGE(0x20000); pg++) 
 		set_page_frame_used(pg);
 
-	/* Pages reservees pour le hardware */
+	/*  pages reserved for hardware */
 	for (pg = PAGE(0xA0000); pg < PAGE(0x100000); pg++) 
 		set_page_frame_used(pg);
 	
 
-	/* Prend une page pour le Page Directory et une pour la Page Table[0] */
+	/* Takes a page to the Page Directory and Page Table for [0] */
 	pd0 = (u32*) get_page_frame();
 	pt0 = (u32*) get_page_frame();
 
-	/* Initialisation du Page Directory */
+	/* Initialization Page Directory */
 	pd0[0] = (u32) pt0;
 	pd0[0] |= 3;
 	for (i = 1; i < 1024; i++)
 		pd0[i] = 0;
 
-	/* Initialisation de la Page Table[0] */
+	/* Initialize the table Page [0] */
 	page_addr = 0;
 	for (pg = 0; pg < 1024; pg++) {
 		pt0[pg] = page_addr;
 		pt0[pg] |= 3;
 		page_addr += 4096;
 	}
-
+    
 	asm("	mov %0, %%eax \n \
 		mov %%eax, %%cr3 \n \
 		mov %%cr0, %%eax \n \
@@ -70,8 +70,8 @@ void init_mm(void)
 }
 
 /* 
- * code_phys_addr: localisation du code en memoire physique
- * code_size: taille du code
+ * code_phys_addr : location code in physical memory
+ * code_size : code size
  */
 u32* pd_create(u32 * code_phys_addr, unsigned int code_size)
 {
@@ -79,16 +79,16 @@ u32* pd_create(u32 * code_phys_addr, unsigned int code_size)
 	u32 i, j;
 	u32 pages;
 
-	/* Prend et initialise une page pour le Page Directory */
+	/* Beginning and initiates a page to the Page Directory */
 	pd = (u32*) get_page_frame();
 	for (i = 1; i < 1024; i++)
 		pd[i] = 0;
 
-	/* Espace kernel */
+	/* kernel space */
 	pd[0] = pd0[0];
 	pd[0] |= 3;
 
-	/* Espace u */
+	/* u space */
 	if (code_size % PAGESIZE)
 		pages = code_size / PAGESIZE + 1;
 	else

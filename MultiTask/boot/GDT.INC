@@ -1,12 +1,12 @@
 
 ;--------------------------------------------------------------------
 ; CalcAdr
-; Entree:
+; Pradzia:
 ;    ax -> segment
 ;    bx -> offset
-; Sortie:
-;    ecx -> adresse lineaire sur 32 bits
-; Modifie: partie haute de ebx
+; Pabaiga:
+;    ecx -> 32 bitu tiesinis adresas
+; Pakeitimas: virsutine ebx dalis
 ;--------------------------------------------------------------------
 calcadr:
     xor ecx, ecx
@@ -21,7 +21,7 @@ calcadr:
 ;--------------------------------------------------------------------
 ; descInit
 ;--------------------------------------------------------------------
-%macro descInit    5    ; base(32), limite(20/32), acces(8), flags(4/8), adresse(32)
+%macro descInit    5    ; base(32), limit(20/32), acces(8), flags(4/8), adress(32)
     push eax
 ; base :
     mov eax, %1
@@ -30,13 +30,13 @@ calcadr:
     mov byte [%5+4], al
     shr eax, 8
     mov byte [%5+7], al
-; limite :
+; limit :
     mov eax, %2
     and eax, 0x000FFFFF
-    mov word [%5], ax  ; ecrit (0..15)
-    shr eax, 16        ; place (16..19) sur le nibble inferieur
-    mov byte [%5+6], 0 ; initialise flags+lim(16..19) a 0
-    or  [%5+6], al     ; ecrit (16..19)
+    mov word [%5], ax  ; written (0..15)
+    shr eax, 16        ; 
+    mov byte [%5+6], 0 ; inicijuojam flags+lim(16..19) i 0
+    or  [%5+6], al     ; written (16..19)
 ; flags :
     mov al, %4
     and al, 0x0F

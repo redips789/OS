@@ -9,23 +9,22 @@ void schedule(void)
 	u32 esp0, eflags;
 	u16 ss, cs;
 
-	/* Stocke dans stack_ptr le pointeur vers les registres sauvegardes */
+	/* stack_ptr nuoroda i backup'intus registrus*/
 	asm("mov (%%ebp), %%eax; mov %%eax, %0" : "=m" (stack_ptr) : );
 
-	/* Si il n'y a pas de processus charge et qu'au moins un est pret, on le charge */
+	/* Jeigu nera veikiancio proceso ir bent vienas pasiruoses, pakraunam ji */
 	if (current == 0 && n_proc) {
 		current = &p_list[0];
 	}
 	/* 
-	 * Si il y a un seul processus (qu'on laisse tourner) ou aucun
-	 * processus, on retourne directement.
+	 * Jei tik vienas procesas ar nei vieno, griztam tiesiogiai
 	 */
 	else if (n_proc <= 1) {
 		return;
 	}
-	/* Si il y a au moins deux processus, on commute vers le suivant */
+	/* Jei bent du, pereinam prie kito */
 	else if (n_proc>1) {
-		/* Sauver les registres du processus courant */
+		/* Isaugom dabartini procesa */
 		current->regs.eflags = stack_ptr[16];
 		current->regs.cs  = stack_ptr[15];
 		current->regs.eip = stack_ptr[14];
@@ -45,14 +44,12 @@ void schedule(void)
 		current->regs.ss = stack_ptr[18];
 		
 		/* 
-		 * La fonction l'interruption et la fonction schedule()
-		 * empilent un grand nombre de registres sur la pile.
-		 * L'instruction ci-dessous permet de repartir sur une pile
-		 * noyau propre une fois la commutation effectuee.
+		 * interuptas ir schedule() suvercia daug registru i stack'a
+		 * tolimesne intrukcija po switch pradeda su svariu kernelio stack'u 
 		 */
 		default_tss.esp0 = (u32) (stack_ptr + 19);
 
-		/* Choix du nouveau processus (un simple roundrobin) */
+		/* Naujo proceso parinkimas (is eiles) */
 		if (n_proc > current->pid+1)
 			current = &p_list[current->pid+1];
 		else 
@@ -60,10 +57,8 @@ void schedule(void)
 	}
 
 	/* 
-	 * Empile les registres ss, esp, eflags, cs et eip necessaires a la
-	 * commutation. Ensuite, la fonction do_switch() restaure les
-	 * registres, la table de page du nouveau processus courant et commute
-	 * avec l'instruction iret.
+	 * Sudedam i stacka ss, esp, eflags, cs. 
+	 * Funkcija do_switch() atstato registrus, paruosia page directori naujos uzduoties ir grista su iret
 	 */
 	ss = current->regs.ss;
 	cs = current->regs.cs;

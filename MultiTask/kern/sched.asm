@@ -2,11 +2,11 @@
 global do_switch
 
 do_switch:
-	; recuper l'adresse de *current 
+	; Recuper the * current address 
 	mov esi, [esp]
-	pop eax			; depile @current
+	pop eax			; pops @current
 
-	; prepare les registres
+	; prepare records
 	push dword [esi+4]	; eax
 	push dword [esi+8]	; ecx
 	push dword [esi+12]	; edx
@@ -19,15 +19,15 @@ do_switch:
 	push dword [esi+52]	; fs
 	push dword [esi+54]	; gs
 
-	; enleve le mask du PIC
+	; removes the mask of PIC
 	mov al, 0x20
 	out 0x20, al
 
-	; charge table des pages
+	; load page table
 	mov eax, [esi+56]
 	mov cr3, eax
 
-	; charge les registres
+	; load records
 	pop gs
 	pop fs
 	pop es
@@ -40,6 +40,6 @@ do_switch:
 	pop ecx
 	pop eax
 
-	; retourne 
+	; return 
 	iret
 

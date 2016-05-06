@@ -1,6 +1,6 @@
 
-/* La fonction memcpy permet de copier n octets de src vers dest.
- * Les adresses sont lineaires.
+/* The memcpy function copies n bytes from src to dest.
+ * The addresses are linear.
  */
 void *memcpy(char *dst, char *src, int n)
 {

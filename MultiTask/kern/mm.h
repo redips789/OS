@@ -15,7 +15,7 @@
 #ifdef __MM__
 u32 *pd0;			/* kernel page directory */
 u32 *pt0;			/* kernel page table */
-u8 mem_bitmap[RAM_MAXPAGE / 8];	/* bitmap allocation de pages (1 Go) */
+u8 mem_bitmap[RAM_MAXPAGE / 8];	/* page allocation bitmap (1 GB) */
 #else
 extern u8 mem_bitmap[];
 #endif
@@ -51,15 +51,15 @@ struct pt_entry {
 } __attribute__ ((packed));
 
 
-/* Marque une page comme utilisee / libre dans le bitmap */
+/*  Make a page as used / free in the bitmap  */
 #define set_page_frame_used(page)	mem_bitmap[((u32) page)/8] |= (1 << (((u32) page)%8))
 #define release_page_frame(p_addr)	mem_bitmap[((u32) p_addr/PAGESIZE)/8] &= ~(1 << (((u32) p_addr/PAGESIZE)%8))
 
-/* Selectionne une page libre dans le bitmap */
+/* Selects a free page in the bitmap */
 char *get_page_frame(void);
 
-/* Initialise les structures de donnees de gestion de la memoire */
+/* Initializes the memory management data structures */
 void init_mm(void);
 
-/* Cree un repertoire de page pour une tache */
+/* Created a page directory for a spot */
 u32* pd_create(u32*, unsigned int);
