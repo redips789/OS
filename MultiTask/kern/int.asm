@@ -61,7 +61,7 @@ _asm_irq_1:
 
 _asm_syscalls:
 	SAVE_REGS
-	push eax                 ; transmission du numero d'appel
+	push eax                 ; iškviesti skaičių perdavimą
 	call do_syscalls
 	pop eax
 	RESTORE_REGS

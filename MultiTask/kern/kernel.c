@@ -15,10 +15,10 @@ void _start(void)
 	kY = 16;
 	kattr = 0x0E;
 
-	/* Initialisation de la GDT et des segments */
+	/* GDT segmentų inicializacija */
 	init_gdt();
 
-	/* Initialisation du pointeur de pile %esp */
+	/* Inicializavimas rodyklės į %esp */
 	asm("   movw $0x18, %ax \n \
                 movw %ax, %ss \n \
                 movl $0x20000, %esp");
@@ -79,7 +79,7 @@ int main(void)
 	init_pic();
 	printk("kernel : pic configured\n");
 
-	/* Initialisation du TSS */
+	/* TSS inicializacija */
 	asm("	movw $0x38, %ax \n \
 		ltr %ax");
 	printk("kernel : tr loaded\n");

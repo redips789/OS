@@ -60,7 +60,7 @@ void isr_kbd_int(void)
 	i = inb(0x60);
 	i--;
 
-	if (i < 0x80) {		/* touche enfoncee */
+	if (i < 0x80) {		/* mygtuko nuspaudimas */
 		switch (i) {
 		case 0x29:
 			lshift_enable = 1;
@@ -78,7 +78,7 @@ void isr_kbd_int(void)
 			putcar(kbdmap
 			       [i * 4 + (lshift_enable || rshift_enable)]);
 		}
-	} else {		/* touche relachee */
+	} else {		/* rakto išleidimas */
 		i -= 0x80;
 		switch (i) {
 		case 0x29:

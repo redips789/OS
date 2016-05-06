@@ -1,8 +1,8 @@
 
-#define GDTBASE    0x0		/* addr. physique ou doit resider la gdt */
-#define GDTSIZE    0xFF		/* nombre max. de descripteurs dans la table */
+#define GDTBASE    0x0		/* fizinis adresas, kuriame turi būti GDT */
+#define GDTSIZE    0xFF		/* max. deskriptorių lentelėje */
 
-/* Descripteur de segment */
+/* Segmento deskriptorius */
 struct gdtdesc {
 	u16 lim0_15;
 	u16 base0_15;
@@ -13,7 +13,7 @@ struct gdtdesc {
 	u8 base24_31;
 } __attribute__ ((packed));
 
-/* Registre GDTR */
+/* GDTR registras*/
 struct gdtr {
 	u16 limite;
 	u32 base;
