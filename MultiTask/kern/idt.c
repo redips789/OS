@@ -45,11 +45,11 @@ void init_idt(void)
 	init_idt_desc(0x08, (u32) _asm_syscalls, INTGATE | 0x6000, &kidt[48]); 
 
 	/* IDTR struktūros inicializacija */
-	kidtr.limite = IDTSIZE * 8;
+	kidtr.limit = IDTSIZE * 8;
 	kidtr.base = IDTBASE;
 
 	/* IDT adresų kopijavimas */
-	memcpy((char *) kidtr.base, (char *) kidt, kidtr.limite);
+	memcpy((char *) kidtr.base, (char *) kidt, kidtr.limit);
 
 	/* IDTR registro pakrovimas */
 	asm("lidtl (kidtr)");

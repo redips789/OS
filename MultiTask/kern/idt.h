@@ -16,7 +16,7 @@ struct idtdesc {
 
 /*  IDTR registras*/
 struct idtr {
-	u16 limite;
+	u16 limit;
 	u32 base;
 } __attribute__ ((packed));
 

@@ -10,7 +10,7 @@ void load_task(u32 * code_phys_addr, u32 * fn, unsigned int code_size)
 	u32 *pd;
 	int i;
 
-	/* Copy the code to the specified address */
+	/* Kopijuoti koda i nurodyta adresa*/
 	memcpy((char *) code_phys_addr, (char *) fn, code_size);
 
 	/* Updated bitmap */
@@ -24,10 +24,10 @@ void load_task(u32 * code_phys_addr, u32 * fn, unsigned int code_size)
 	for (i = 0; i < pages; i++)
 		set_page_frame_used(page_base + i);
 
-	/* Creation of the directory and page tables */
+	/* directory ir page tables sukurimas*/
 	pd = pd_create(code_phys_addr, code_size);
 
-	/* Initialization records */
+	/* inicializuoti irasus/registrus */
 	p_list[n_proc].pid = n_proc;
 	p_list[n_proc].regs.ss = 0x33;
 	p_list[n_proc].regs.esp = 0x40001000;

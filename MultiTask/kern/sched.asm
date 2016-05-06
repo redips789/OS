@@ -2,11 +2,11 @@
 global do_switch
 
 do_switch:
-	; Recuper the * current address 
+	; paiimti current address
 	mov esi, [esp]
 	pop eax			; pops @current
 
-	; prepare records
+	; paruosti registrus
 	push dword [esi+4]	; eax
 	push dword [esi+8]	; ecx
 	push dword [esi+12]	; edx
@@ -19,15 +19,15 @@ do_switch:
 	push dword [esi+52]	; fs
 	push dword [esi+54]	; gs
 
-	; removes the mask of PIC
+	; nuimti mask of PIC (Programmable Interrupt controler )
 	mov al, 0x20
 	out 0x20, al
 
-	; load page table
+	; pakrauti page table
 	mov eax, [esi+56]
 	mov cr3, eax
 
-	; load records
+	; pakrauti registrus
 	pop gs
 	pop fs
 	pop es

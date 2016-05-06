@@ -16,7 +16,7 @@ start:
     mov ax, 0x07C0
     mov ds, ax
     mov es, ax
-    mov ax, 0x8000    ; stack en 0xFFFF
+    mov ax, 0x8000    ; stack in 0xFFFF
     mov ss, ax
     mov sp, 0xf000
 

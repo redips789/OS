@@ -1,6 +1,6 @@
 
-/* The memcpy function copies n bytes from src to dest.
- * The addresses are linear.
+/*  memcpy funkcija kopijuoja n baitu is src i dest.
+ * Adresai tiesiniai
  */
 void *memcpy(char *dst, char *src, int n)
 {

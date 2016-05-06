@@ -6,14 +6,14 @@
 
 
 / * * Init desc 'inicijuoja segmento deskriptorių GDT ar LDT. * "desc" yra linijinis adresas deskriptoriui inicializuoti. * /
-void init_gdt_desc(u32 base, u32 limite, u8 acces, u8 other,
+void init_gdt_desc(u32 base, u32 limit, u8 acces, u8 other,
 		   struct gdtdesc *desc)
 {
-	desc->lim0_15 = (limite & 0xffff);
+	desc->lim0_15 = (limit & 0xffff);
 	desc->base0_15 = (base & 0xffff);
 	desc->base16_23 = (base & 0xff0000) >> 16;
 	desc->acces = acces;
-	desc->lim16_19 = (limite & 0xf0000) >> 16;
+	desc->lim16_19 = (limit & 0xf0000) >> 16;
 	desc->other = (other & 0xf);
 	desc->base24_31 = (base & 0xff000000) >> 24;
 	return;
@@ -43,11 +43,11 @@ void init_gdt(void)
 	init_gdt_desc((u32) & default_tss, 0x67, 0xE9, 0x00, &kgdt[7]);	/* TSS deskriptorius */
 
 	/* struktūros inicializacija GDTRui */
-	kgdtr.limite = GDTSIZE * 8;
+	kgdtr.limit = GDTSIZE * 8;
 	kgdtr.base = GDTBASE;
 
 	/* kopijuoja GDT adresą */
-	memcpy((char *) kgdtr.base, (char *) kgdt, kgdtr.limite);
+	memcpy((char *) kgdtr.base, (char *) kgdt, kgdtr.limit);
 
 	/* pakrauna gdtr registą */
 	asm("lgdtl (kgdtr)");
