@@ -8,7 +8,7 @@ void do_syscalls(int sys_num)
 
 	if (sys_num == 1) {
 		asm("mov %%ebx, %0": "=m"(u_str) :);
-		for (i = 0; i < 100000; i++);	/* temporisation */
+		for (i = 0; i < 100000; i++);	/* delay */
 		printk(u_str);
 	} else {
 		printk("unknown syscall %d\n", sys_num);

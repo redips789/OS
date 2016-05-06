@@ -6,8 +6,7 @@
 
 
 /* 
- * 'scrollup' scrolle l'ecran (la console mappee en ram) vers le haut
- * de n lignes (de 0 a 25).
+ * 'scrollup' scroll per n eiluciu (nuo 0 iki 25).
  */
 void scrollup(unsigned int n)
 {
@@ -59,7 +58,7 @@ void putcar(uchar c)
 }
 
 /*
- * Affiche la valeur des n octets a l'adresse indiquee
+ * Spausdinti n baitu nurodytu adresu
  */
 void dump(uchar* addr, int n)
 {
