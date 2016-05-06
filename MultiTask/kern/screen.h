@@ -2,13 +2,13 @@
 
 #ifdef __SCREEN__
 
-#define RAMSCREEN 0xB8000	/* debut de la memoire video */
-#define SIZESCREEN 0xFA0	/* 4000, nombres d'octets d'une page texte */
+#define RAMSCREEN 0xB8000	/* video atminties pradzia */
+#define SIZESCREEN 0xFA0	/* 4000, bitu skaicius teksto puslapyje */
 #define SCREENLIM 0xB8FA0
 
-char kX = 0;			/* position courante du curseur a l'ecran */
+char kX = 0;			/* kursoriaus ekrane pozicija */
 char kY = 8;
-char kattr = 0x07;		/* attributs video des caracteres a afficher */
+char kattr = 0x07;		/* spausdinamo char atributai */
 
 #else
 
