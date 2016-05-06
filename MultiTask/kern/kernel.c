@@ -15,10 +15,10 @@ void _start(void)
 	kY = 16;
 	kattr = 0x0E;
 
-	/* Initialisation de la GDT et des segments */
+	/* Initialize the GDT and segments */
 	init_gdt();
 
-	/* Initialisation du pointeur de pile %esp */
+	/* Initialization of the stack pointer % esp */
 	asm("   movw $0x18, %ax \n \
                 movw %ax, %ss \n \
                 movl $0x20000, %esp");
@@ -79,11 +79,11 @@ int main(void)
 	init_pic();
 	printk("kernel : pic configured\n");
 
-	/* Initialisation du TSS */
+	/* TSS initialization */
 	asm("	movw $0x38, %ax \n \
 		ltr %ax");
 	printk("kernel : tr loaded\n");
-
+    /* Paging enabled */
 	init_mm();
 	printk("kernel : paging enable\n");
 
