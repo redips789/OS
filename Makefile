@@ -1,5 +1,5 @@
 
-SOURCES=boot.o main.o multitasking/process.o common/common.o screen/monitor.o descriptors/descriptor_tables.o descriptors/gdt.o interrupts/interrupt.o interrupts/isr.o timer/timer.o common/ordered_map.o paging/paging.o heap/kheap.o multitasking/task.o
+SOURCES=boot/boot.o kern/kernel.o kern/process.o kern/common.o kern/monitor.o kern/descriptor_tables.o kern/gdt.o kern/interrupt.o kern/isr.o kern/timer.o kern/ordered_map.o kern/paging.o kern/kheap.o kern/task.o
 
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector
 LDFLAGS=-Tlink.ld

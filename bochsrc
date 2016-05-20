@@ -12,4 +12,4 @@ info: action=report
 debug: action=ignore
 mouse: enabled=0
 clock: sync=realtime
-cpu: ips=1000000
+cpu: ips=1000000000
