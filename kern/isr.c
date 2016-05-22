@@ -10,28 +10,28 @@ void register_interrupt_handler(u8int n, isr_t handler)
 }
 
 // This gets called from our ASM interrupt handler stub.
-void isr_handler(registers_t regs)
+void isr_handler(registers_t regs)	//interrupt service routine - ISR
 {
-    spauzdinti("recieved interrupt: ");
-    spauzdinti_number(regs.int_no, 10);
+    spausdinti("recieved interrupt: ");
+    spausdinti_number(regs.int_no, 10);
     monitor_put('\n');
 
     if (interrupt_handlers[regs.int_no] != 0)
     {
-        spauzdinti("handler exists");
+        spausdinti("handler exists");
         isr_t handler = interrupt_handlers[regs.int_no];
         handler(regs);
     }    
     else
     {
-        spauzdinti("unhandled interrupt: ");
-        spauzdinti_number(regs.int_no, 10);
+        spausdinti("unhandled interrupt: ");
+        spausdinti_number(regs.int_no, 10);
         monitor_put('\n');
     }
 }
 
 // This gets called from our ASM interrupt handler stub.
-void irq_handler(registers_t regs)
+void irq_handler(registers_t regs)	//interrupt request - IRQ
 {    
     // Send an EOI (end of interrupt) signal to the PICs.
     // If this interrupt involved the slave.

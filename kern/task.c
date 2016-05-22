@@ -14,7 +14,7 @@
 extern u32int initial_esp;
 
 /// imported from process.s
-extern u32int read_eip();
+extern u32int read_eip();		//get instruction pointer
 extern void do_switch_task(u32int eip, u32int esp, u32int ebp, u32int cr3);
 // current running task
 volatile task_t *current_task;

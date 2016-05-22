@@ -134,7 +134,7 @@ void monitor_clear()
 }
 
 // Outputs a null-terminated ASCII string to the monitor.
-void spauzdinti(char *c)
+void spausdinti(char *c)
 {
     int i = 0;
     while (c[i])
@@ -143,7 +143,7 @@ void spauzdinti(char *c)
     }
 }
 
-void spauzdinti_number(u32int val, u32int base)
+void spausdinti_number(u32int val, u32int base)
 {
 	char astr[100];
     char *str = astr+99; // Currently pointing to the end of string
@@ -178,7 +178,7 @@ void write_message_and_wait(char *c)
 
 void monitor_put_color(char c, u8int foreColour)
 {
-    // The background colour is black (0), the foreground is white (15).
+    // The background colour is black (0).
     u8int backColour = 0;
 
     // The attribute byte is made up of two nibbles - the lower being the 
@@ -237,7 +237,7 @@ void monitor_put_color(char c, u8int foreColour)
 
 }
 
-void spauzdinti_color(char *c, u8int foreColour)
+void spausdinti_color(char *c, u8int foreColour)
 {
     int i = 0;
     while (c[i])

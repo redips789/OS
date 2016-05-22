@@ -13,12 +13,12 @@ void monitor_put(char c);
 void monitor_clear();
 
 // Output a null-terminated ASCII string to the monitor.
-void spauzdinti(char *c);
-void spauzdinti_number(u32int val, u32int base);
+void spausdinti(char *c);
+void spausdinti_number(u32int val, u32int base);
 
 void write_message_and_wait(char *c);
 
 void monitor_put_color(char c, u8int foreColour);
-void spauzdinti_color(char *c, u8int foreColour);
+void spausdinti_color(char *c, u8int foreColour);
 
 #endif // MONITOR_H

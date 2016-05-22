@@ -75,7 +75,7 @@ void alloc_frame(page_t *page, int is_kernel, int is_writeable)
   if(page->frame) {
     return; // page already has an allocated frame
   }
-  u32int idx = first_frame();
+  u32int idx = first_frame();	//first free frame
   if(idx == (u32int)-1) {
     PANIC("No free frames!");
   }
@@ -179,15 +179,15 @@ void initialize_paging()
   u32int i = 0;
   page_t *page = 0;
   for(i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += PAGE_SIZE) {
-    page = get_page(i,1,kernel_directory);
+    page = get_page(i,1,kernel_directory); //make=1, t.y. create new
   } 
   
   // identity map all of the memory we've allocated so far
   // so we can use it once we've enabled paging
   i = 0;
   while(i <= placement_address+0x1000) {
-    page = get_page(i,1,kernel_directory);
-    alloc_frame(page,0,0);
+    page = get_page(i,1,kernel_directory);	//make=1, t.y. create new
+    alloc_frame(page,0,0);	//is kernel=0, is writable=0
     i += PAGE_SIZE;
   }
 
@@ -254,22 +254,22 @@ void page_fault(registers_t regs)
   int id = regs.err_code & 0x10;        // caused by an instruction fetch?
 
   // for now, just output an error message
-  spauzdinti("Page fault! ( ");
+  spausdinti("Page fault! ( ");
   if(present) {
-    spauzdinti("present ");
+    spausdinti("present ");
   }
   if(rw) {
-    spauzdinti("read-only ");
+    spausdinti("read-only ");
   }
   if(us) {
-    spauzdinti("user mode ");
+    spausdinti("user mode ");
   }
   if(reserved) {
-    spauzdinti("reserved ");
+    spausdinti("reserved ");
   }
-  spauzdinti(") at ");
-  spauzdinti_number(faulting_address,16);
-  spauzdinti("\n");
+  spausdinti(") at ");
+  spausdinti_number(faulting_address,16);
+  spausdinti("\n");
   PANIC("Page fault!");
 }
 

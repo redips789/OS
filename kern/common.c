@@ -94,13 +94,13 @@ extern void panic(const char *message, const char *file, u32int line)
     // We encountered a massive problem and have to stop.
     asm volatile("cli"); // Disable interrupts.
 
-    spauzdinti("PANIC(");
-    spauzdinti(message);
-    spauzdinti(") at ");
-    spauzdinti(file);
-    spauzdinti(":");
-    spauzdinti_number(line, 10);
-    spauzdinti("\n");
+    spausdinti("PANIC(");
+    spausdinti(message);
+    spausdinti(") at ");
+    spausdinti(file);
+    spausdinti(":");
+    spausdinti_number(line, 10);
+    spausdinti("\n");
     // Halt by going into an infinite loop.
     for(;;);
 }
@@ -109,14 +109,14 @@ extern void panic_assert(const char *file, u32int line, const char *desc)
 {
     // An assertion failed, and we have to panic.
     asm volatile("cli"); // Disable interrupts.
-spauzdinti("stai ir as");
-    spauzdinti("ASSERTION-FAILED(");
-    spauzdinti(desc);
-    spauzdinti(") at ");
-    spauzdinti(file);
-    spauzdinti(":");
-    spauzdinti_number(line, 10);
-    spauzdinti("\n");
+	spausdinti("stai ir as");
+    spausdinti("ASSERTION-FAILED(");
+    spausdinti(desc);
+    spausdinti(") at ");
+    spausdinti(file);
+    spausdinti(":");
+    spausdinti_number(line, 10);
+    spausdinti("\n");
     // Halt by going into an infinite loop.
     for(;;);
 }

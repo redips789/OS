@@ -105,7 +105,7 @@ static void expand(u32int new_size, heap_t *heap)
     heap->end_address = heap->start_address + new_size;
 }
 
-static u32int contract(u32int new_size, heap_t *heap)
+static u32int contract(u32int new_size, heap_t *heap) //make heap smaller
 {
     // Sanity check.
     ASSERT(new_size < heap->end_address - heap->start_address);
@@ -403,54 +403,54 @@ u32int kmalloc(u32int sz)
 }
 
 void write_heap_alloc_info_before(heap_t *heap, u32int size){
-	spauzdinti("---------------------------\n");
-//	spauzdinti("Vyksta atminties alokavimas\n");
-	spauzdinti("Trying to allocate memory ");
-	spauzdinti_number(size, 10);
-	spauzdinti("\nblock Begin         End         Size");
-	spauzdinti("\n");
+	spausdinti("---------------------------\n");
+//	spausdinti("Vyksta atminties alokavimas\n");
+	spausdinti("Trying to allocate memory ");
+	spausdinti_number(size, 10);
+	spausdinti("\nblock Begin         End         Size");
+	spausdinti("\n");
 	
 	write_heap_holes_info(heap);
-	// spauzdinti("Heap Start address: ");
- //    spauzdinti_number(heap->start_address, 10);
- //    spauzdinti("\n");
- //    spauzdinti("Heap End address: ");
- //    spauzdinti_number(heap->end_address, 10);
- //    spauzdinti("\n");    
+	// spausdinti("Heap Start address: ");
+ //    spausdinti_number(heap->start_address, 10);
+ //    spausdinti("\n");
+ //    spausdinti("Heap End address: ");
+ //    spausdinti_number(heap->end_address, 10);
+ //    spausdinti("\n");    
 }
 
 void write_heap_alloc_info_after(heap_t *heap, u32int location){
-//	spauzdinti("Po:\n");
-	spauzdinti("Memory allocated: ");
-	spauzdinti_number(location, 10);
-	spauzdinti("\n");
+//	spausdinti("Po:\n");
+	spausdinti("Memory allocated: ");
+	spausdinti_number(location, 10);
+	spausdinti("\n");
 }
 
 void write_heap_free_info_before(heap_t *heap, u32int location){
-	spauzdinti("-------------------------\n");
-	spauzdinti("Free: ");
-	spauzdinti_number(location, 10);
-	spauzdinti("\n");
+	spausdinti("-------------------------\n");
+	spausdinti("Free: ");
+	spausdinti_number(location, 10);
+	spausdinti("\n");
 
-	spauzdinti("Heap Start address: ");
-    spauzdinti_number(heap->start_address, 10);
-    spauzdinti("\n");
-    spauzdinti("Heap End address: ");
-    spauzdinti_number(heap->end_address, 10);
-    spauzdinti("\n");
+	spausdinti("Heap Start address: ");
+    spausdinti_number(heap->start_address, 10);
+    spausdinti("\n");
+    spausdinti("Heap End address: ");
+    spausdinti_number(heap->end_address, 10);
+    spausdinti("\n");
 	
 	write_heap_holes_info(heap);
 }
 
 void write_heap_free_info_after (heap_t *heap){
-	spauzdinti("After free:\n");
+	spausdinti("After free:\n");
 
-	spauzdinti("Heap begin address: ");
-    spauzdinti_number(heap->start_address, 10);
-    spauzdinti("\n");
-    spauzdinti("Heap end address: ");
-    spauzdinti_number(heap->end_address, 10);
-    spauzdinti("\n");
+	spausdinti("Heap begin address: ");
+    spausdinti_number(heap->start_address, 10);
+    spausdinti("\n");
+    spausdinti("Heap end address: ");
+    spausdinti_number(heap->end_address, 10);
+    spausdinti("\n");
 
 	
 	write_heap_holes_info(heap);
@@ -461,18 +461,18 @@ void write_heap_holes_info(heap_t *heap){
 	while (iterator < heap->index.size)
     {
         header_t *header = (header_t *)lookup_ordered_array(iterator, &heap->index);
-        spauzdinti("| ");
-        spauzdinti_number(iterator, 10);
-        spauzdinti("  |");
-        spauzdinti_number((u32int)header, 10);
-        // spauzdinti("  sizeof header: ");
-        // spauzdinti_number(sizeof(header), 10);
-        //spauzdinti("\n");
-        spauzdinti(" | ");
-        spauzdinti_number((u32int)header + header->size, 10);
-        spauzdinti("  | ");
-        spauzdinti_number(header->size, 10);        
-        spauzdinti("\n");
+        spausdinti("| ");
+        spausdinti_number(iterator, 10);
+        spausdinti("  |");
+        spausdinti_number((u32int)header, 10);
+        // spausdinti("  sizeof header: ");
+        // spausdinti_number(sizeof(header), 10);
+        //spausdinti("\n");
+        spausdinti(" | ");
+        spausdinti_number((u32int)header + header->size, 10);
+        spausdinti("  | ");
+        spausdinti_number(header->size, 10);        
+        spausdinti("\n");
         
         iterator ++;
     }
